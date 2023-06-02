@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %} 
+rental_history  
+{% endblock title %}
+
+
+{% block content %}
+
+
+  <section class="rental_history my-3 py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                  <tr>
+                      <th>#</th>
+                      <th>title</th>
+                      <th>Car</th>
+                      <th>Rental price</th>
+                      <th>start_date</th>
+                      <th>end_date</th>
+                      <th>total</th>
+                      <th>edit</th>
+                  </tr>
+                  {% for rental in rentals %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'delete_rental' rental.id  %}" class="btn btn-danger">Delete</a>
+                    </td>
+                      <td > {{rental.car.title}}  </td>
+                      <td><img width="100" src="{{rental.car.image.url}}" alt="{{rental.car.title}}" class="img-thumbnail img-fluid"></td>
+                      <td >{{ rental.car.daily_rate  }}</td>
+                      <td>{{ rental.start_date }}</td>
+                      <td>{{ rental.end_date }}</td>
+                      <td> {{rental.total_cost}}  </td>
+                      <td>
+                        <a href="{% url 'edit_rental'  rental.id %}" class="btn btn-success">Edit</a>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                    <td colspan="6">
+                      <h3>Total</h3>
+                    </td>
+                    <td colspan="4">
+                     
+                    </td>
+                  </tr>
+              
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+  
+{% endblock content %}

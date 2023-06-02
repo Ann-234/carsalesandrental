@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand text-white" href="#">Car sales and rental</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="search w-50 pt-3">
+      <form action="{% url 'search' %}" method="get">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" name="search_word" class="form-control" placeholder="search for car....">
+          <span class="input-group-text" id="basic-addon2"><i class="bi bi-search"></i></span>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link  text-white"  href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'products' %}">Shop</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="{% url 'car_rentals'  %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Rental
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'car_rentals'  %}">Book car</a></li>
+            <li><a class="dropdown-item" href="{% url 'rental_history'  %}">Booking details</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Category
+          </a>
+          <ul class="dropdown-menu">
+            {% for item in catloops %}
+            <li><a class="dropdown-item" href="{% url 'category' item.id %}"> {{item.title}}  </a></li>             
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Users
+          </a>
+          <ul class="dropdown-menu">
+            {% if request.user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link text-white" href="{% url 'mycart'  %}"> <i class="bi bi-cart-fill"></i><span class="badge bg-danger">{{carts}}</span> </a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

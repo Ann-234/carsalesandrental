@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+  product page
+{% endblock title %}
+
+{% block content %}
+   <section id="product">
+     <div class="container my-3">
+    <div class="row">
+      {% if  product %}
+         <div class="col-md-6">
+           <div class="card">
+           <img src="{{product.image.url}}"  height="400" alt="{{product.title}}">
+           </div>        
+         </div>
+
+         <div class="col-md-6">
+            <div class="card">
+              <div class="card-header display-5 "> {{product.title}}  </div>
+               <div class="card-body " >
+                 <div class="display-3"> {{product.price}} </div>
+                 <p class="lead"> {{product.description}}  </p>
+
+                 <div class="d-grid">
+                  <a href="{% url 'addtocart' product.id %}" class="btn btn-success">Add to Cart</a>
+                 </div>
+               </div>
+            </div>
+         </div>
+      {% else %}
+        <p class="lead bg-danger text-white">No product of this selected item available</p>
+      {% endif %}
+      
+    </div>
+   </div>
+   </section>
+  
+{% endblock content %}

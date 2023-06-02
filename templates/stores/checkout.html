@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+  checkout page  
+{% endblock title %}
+
+
+{% block content %}
+   <section class="checkout my-3 py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          {% if cart %}
+          <div class="card ">
+            <div class="table-responsive">
+              <table class=" table table-striped">
+               <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Sn</th>
+                  <th>Image</th>
+                  <th>year_Manufacture</th>
+                  <th>Product</th>
+                  <th>Unit price</th>
+                  <th>Quantity</th>
+                  <th>subtotal</th>
+                </tr>
+               </thead>
+               <tbody>
+                {% for item in cart.cartitem_set.all %}
+                   <tr>
+                    <td>
+                      <a href="{% url 'managecart' item.id %}?action=del" class="btn btn-danger">Delete</a>
+                    </td>
+                    <td> {{forloop.counter}} </td>
+                    <td><img width="100" src="{{item.product.image.url}}" alt="{{item.product.title}}" class="img-thumbnail img-fluid"></td>
+                    <td> {{item.product.year_Manufacture}} </td>
+                    <td> {{item.product.title}} </td>
+                    <td>&#8358 {{item.product.price}} </td>
+                    <td>{{item.quantity}}</td>
+                    <td>&#8358 {{item.subtotal|intcomma}} </td>
+                   </tr>
+                  
+                {% endfor %}
+                <tr>
+                  <td colspan="6">
+                    <h3>Total</h3>
+                  </td>
+                  <td colspan="4">
+                    <h3>&#8358 {{cart.total|intcomma}} </h3>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <td colspan="3">
+                      <a href="{% url 'products' %}" class="btn btn-dark">Continue Shopping</a>
+                    </td>
+                  
+                  </td>
+                </tr>                       
+               </tbody>
+
+              </table>
+              
+            </div>
+          </div>
+            
+          {% else %}
+           <p class="lead bg-danger text-white p-3">
+            No cart item available,add to cart
+           </p>
+            
+          {% endif %}          
+        </div>
+        <div class="col-md-3">
+          <form action="" method="post">
+            {% csrf_token %}
+            {{form}}
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Proceed to Payment</button>
+            </div>
+          </form>
+      </div>
+    </div>
+
+   </section>
+   {% endblock content %}

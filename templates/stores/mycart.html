@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+  Cart page  
+{% endblock title %}
+
+
+{% block content %}
+   <section class="cart my-3 py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 mx-auto">
+          {% if cart %}
+          <div class="card ">
+            <div class="table-responsive">
+              <table class=" table table-striped">
+               <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Sn</th>
+                  <th>Image</th>
+                  <th>year_Manufacture</th>
+                  <th>Product</th>
+                  <th>Unit price</th>
+                  <th>Quantity</th>
+                  <th>subtotal</th>
+                </tr>
+               </thead>
+               <tbody>
+                {% for item in cart.cartitem_set.all %}
+                   <tr>
+                    <td>
+                      <a href="{% url 'managecart' item.id %}?action=del" class="btn btn-danger">Delete</a>
+                    </td>
+                    <td> {{forloop.counter}} </td>
+                    <td><img width="100" src="{{item.product.image.url}}" alt="{{item.product.title}}" class="img-thumbnail img-fluid"></td>
+                    <td> {{item.product.year_Manufacture}} </td>
+                    <td> {{item.product.title}} </td>
+                    <td>&#8358 {{item.product.price}} </td>
+                    <td> 
+                      <a href="{% url 'managecart' item.id %}?action=dcr"><i class="bi bi-dash-circle"></i></a>
+                      {{item.quantity}}
+                      <a href="{% url 'managecart' item.id %}?action=inc"><i class="bi bi-plus-circle"></i></a>
+                    </td>
+                    <td>&#8358 {{item.subtotal|intcomma}} </td>
+                   </tr>
+                  
+                {% endfor %}
+                <tr>
+                  <td colspan="6">
+                    <h3>Total</h3>
+                  </td>
+                  <td colspan="4">
+                    <h3>&#8358 {{cart.total|intcomma}} </h3>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    <a href="{% url 'products' %}" class="btn btn-dark"> Continue Shopping</a>
+                  </td>
+                  {% if cart.cartitem_set.all %}
+                       <td  colspan="4">
+                          <a href="{% url 'checkout' %}" class="btn btn-success"> Proceed to checkout</a>
+                       </td>
+                    {% else %}
+                       <td colspan="4">
+                          <button disabled="disabled" class="btn btn-success">Cant Checkout Yet</button>
+                       </td>
+                    {% endif %}                         
+                </tr>              
+               </tbody>
+
+              </table>
+              
+            </div>
+          </div>
+            
+          {% else %}
+           <p class="lead bg-danger text-white p-3">
+             No cart item available,add to cart
+           </p>
+            
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+
+   </section>
+
+  
+{% endblock content %}

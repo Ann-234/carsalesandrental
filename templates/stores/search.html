@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+  search page  
+{% endblock title %}
+
+
+{% block content %}
+
+
+   <section class="search" class="my-3">
+    <div class="container">
+      <div class="row">
+        {% if search %}
+          {% for item in search  %}
+              <div class="col-md-6">
+                 <a href="{% url 'product' item.id %}" class="text-decoration-none line-dark">
+                  <div class="card my-3">
+                    <img src="{{item.image.url}}" alt="{{item.brand}}" class="card-img">
+                    <h5> {{item.brand|title}}</h5> 
+                  </div>                 
+                 </a>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header display-5 "> {{item.brand|title}}  </div>
+                   <div class="card-body " >
+                     <h5>{{item.year_Manufacture}}</h5>
+                     <button class="btn btn-dark">{{item.category}}  </button>
+                     <h4> &#8358; {{item.price|intcomma}} </h4>   
+                     <p class="lead"> {{item.description |truncatewords:20}}  </p>
+                   </div>
+                </div>
+              </div>
+            
+          {% endfor %}
+          
+        {% else %}
+          <p class="lead bg-danger text-white">NO search yet</p>
+        {% endif %}
+        
+      </div>
+    </div>  
+   </section>
+  
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+  car_rentals page
+{% endblock title %}
+
+
+{% block content %}
+
+
+<section id="car_rentals" class="py-3">
+  <div class="intro text-center mb-2 container">
+    <h4 class="display-4">Book your car </h4>
+    <p class="lead">Lorem ipsum dolor sit.</p>
+   
+  </div>
+  <div class="container">
+    <div class="row">
+      {% if cars %}
+         {% for car in cars %}
+         <div class="col-md-4">
+          <div class="card">
+            <img src="{{car.image.url}}"  height="200"    alt="{{car.title}}" class="card-fluid">
+          </div>
+          <h5 class="text-center">{{car.brand}} </h5>
+         </div> 
+         {% endfor %}
+      {% else %}
+        <p class="lead p-3 bg-danger text-white">No latest product yet!</p>
+      {% endif %}   
+    </div>
+    <div class="text-end mb-3">
+      <a href="{% url 'cars'  %}" class="btn btn-dark">View More</a>
+    </div>
+  </div>
+  
+</section>
+  
+{% endblock content %}

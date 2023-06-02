@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+  car page
+{% endblock title %}
+
+{% block content %}
+   <section id="product">
+     <div class="container my-3">
+    <div class="row">
+      {% if  car %}
+         <div class="col-md-6">
+           <div class="card">
+           <img src="{{car.image.url}}"  height="400" alt="{{car.title}}">
+           </div>        
+         </div>
+
+         <div class="col-md-6">
+            <div class="card">
+              <div class="card-header display-5 "> {{car.title}}  </div>
+               <div class="card-body " >
+                 <div class="display-3"> {{car.daily_rate}} </div>
+                 <p class="lead"> {{car.description}}  </p>
+               </div>
+            </div>
+         </div>
+      {% else %}
+        <p class="lead bg-danger text-white">No product of this selected item available</p>
+      {% endif %}
+      
+    </div>
+   </div>
+   </section>
+  
+{% endblock content %}
